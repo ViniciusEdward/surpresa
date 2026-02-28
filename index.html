@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para a mulher da minha vida ✨</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Great+Vibes&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #0a0508;
+            --rose-gold: #b76e79;
+            --rose-light: #e0bfb8;
+            --text-light: #f8f8f8;
+            --glass: rgba(20, 10, 15, 0.65);
+            --border-glow: rgba(183, 110, 121, 0.35);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent; /* Remove brilho azul ao tocar no celular */
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden; 
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Fundo Estrelado Animado */
+        #stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); box-shadow: 0 0 10px rgba(255,255,255,0.8); }
+        }
+
+        /* Contêiner das Telas */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1.2s ease-in-out, visibility 1.2s, transform 1.2s;
+            transform: scale(0.95);
+            z-index: 10;
+            padding: 20px;
+        }
+
+        .screen.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1);
+        }
+
+        /* Tipografia */
+        h1, h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: var(--rose-light);
+            text-align: center;
+        }
+
+        .cursive {
+            font-family: 'Great Vibes', cursive;
+            color: var(--rose-gold);
+            font-size: 4rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(183, 110, 121, 0.5);
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            text-align: center;
+            max-width: 600px;
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        /* Container de Botões (Avançar e Voltar) */
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap; /* Ajusta no mobile */
+        }
+
+        /* Botão Avançar Elegante */
+        .btn-next {
+            background: transparent;
+            color: var(--rose-light);
+            border: 1px solid var(--rose-gold);
+            padding: 12px 35px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 15px transparent;
+            animation: floatBtn 3s ease-in-out infinite;
+        }
+
+        .btn-next:hover {
+            background: var(--rose-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 0 20px var(--border-glow);
+            transform: translateY(-3px);
+        }
+
+        /* Botão Voltar (Discreto) */
+        .btn-back {
+            background: transparent;
+            color: var(--rose-light);
+            border: none;
+            padding: 10px 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        @keyframes floatBtn {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
+        }
+
+        /* Estilo das Fotos */
+        .photo-container {
+            position: relative;
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 25px;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 1.2s ease 0.4s;
+        }
+
+        .screen.active .photo-container {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .photo-frame {
+            background: #fff;
+            padding: 10px 10px 35px 10px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+            border-radius: 4px;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .photo-frame:hover {
+            transform: scale(1.03) rotate(1deg);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+            border-radius: 2px;
+            filter: sepia(15%) contrast(105%);
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 8px;
+            width: 100%;
+            text-align: center;
+            font-family: 'Great Vibes', cursive;
+            color: #222;
+            font-size: 1.6rem;
+            font-weight: bold;
+        }
+
+        /* Carta Final (Glassmorphism + 3D) */
+        .letter-card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid var(--border-glow);
+            padding: 45px 35px;
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8), inset 0 0 20px rgba(183, 110, 121, 0.15);
+            width: 100%;
+            max-width: 600px;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
+            transition: transform 0.2s ease-out;
+            margin: 0 15px; /* Margem de segurança para mobile */
+        }
+
+        .letter-card p {
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: #eaeaea;
+        }
+
+        .signature {
+            font-family: 'Great Vibes', cursive;
+            color: var(--rose-gold);
+            font-size: 2.5rem;
+            text-align: right;
+            margin-top: 25px;
+            display: block;
+        }
+
+        /* Vaga-lumes (Partículas Mágicas) */
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--rose-light);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--rose-gold), 0 0 20px var(--rose-light);
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0;
+            animation: floatMagic 6s infinite ease-in-out;
+        }
+
+        @keyframes floatMagic {
+            0% { transform: translateY(0) scale(0); opacity: 0; }
+            20% { opacity: 1; transform: scale(1.5); }
+            80% { opacity: 1; }
+            100% { transform: translateY(-120px) scale(0); opacity: 0; }
+        }
+
+        /* --- RESPONSIVIDADE PARA MOBILE --- */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .cursive { font-size: 3rem; }
+            p { font-size: 1rem; padding: 0 10px; margin-bottom: 15px; }
+            
+            .photo-container { max-width: 260px; }
+            .photo-frame img { height: 260px; }
+            
+            .letter-card { padding: 30px 20px; }
+            .letter-card p { font-size: 0.95rem; }
+            .signature { font-size: 2rem; }
+            
+            .btn-next { padding: 10px 25px; font-size: 0.8rem; }
+            .btn-group { flex-direction: column-reverse; gap: 5px; } /* Empilha os botões no celular */
+        }
+
+        @media (max-width: 480px) {
+            .cursive { font-size: 2.6rem; }
+            .photo-container { max-width: 240px; }
+            .photo-frame img { height: 240px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="stars-container"></div>
+
+    <div class="screen active" id="step-1">
+        <h1 class="cursive">Meu Amor...</h1>
+        <h2 style="font-size: 1.3rem; letter-spacing: 2px; font-weight: 300;">Preparei algo especial para você.</h2>
+        <p style="margin-top: 20px; font-style: italic; color: #aaa;">Desligue-se do mundo por um minuto e apenas sinta.</p>
+        <button class="btn-next" style="margin-top: 25px;" onclick="nextStep(2)">Descobrir ✨</button>
+    </div>
+
+    <div class="screen" id="step-2">
+        <div class="photo-container" style="transform: rotate(-3deg);">
+            <div class="photo-frame">
+                <img src="foto1.jpeg" alt="Momento 1">
+                <div class="photo-caption">Onde tudo começou...</div>
+            </div>
+        </div>
+        <p>Desde que você entrou na minha vida, o universo parece ter ganhado novas cores. Cada sorriso seu ilumina os meus dias mais escuros.</p>
+        <div class="btn-group">
+            <button class="btn-back" onclick="nextStep(1)">⟵ Voltar</button>
+            <button class="btn-next" onclick="nextStep(3)">Continuar ➔</button>
+        </div>
+    </div>
+
+    <div class="screen" id="step-3">
+        <div class="photo-container" style="transform: rotate(2deg);">
+            <div class="photo-frame">
+                <img src="foto2.jpeg" alt="Momento 2">
+                <div class="photo-caption">Meu porto seguro</div>
+            </div>
+        </div>
+        <p>Eu amo a forma como a gente se entende, como a gente se cuida. Você não é apenas minha namorada, é a minha paz e a minha melhor companhia.</p>
+        <div class="btn-group">
+            <button class="btn-back" onclick="nextStep(2)">⟵ Voltar</button>
+            <button class="btn-next" onclick="nextStep(4)">Só mais um pouco ➔</button>
+        </div>
+    </div>
+
+    <div class="screen" id="step-4">
+        <div class="photo-container" style="transform: rotate(-1deg);">
+            <div class="photo-frame">
+                <img src="foto3.jpeg" alt="Momento 3">
+                <div class="photo-caption">Nós dois contra o mundo</div>
+            </div>
+        </div>
+        <p>Colecionar memórias ao seu lado é o meu passatempo favorito. E eu quero construir uma vida inteira de momentos assim com você.</p>
+        <div class="btn-group">
+            <button class="btn-back" onclick="nextStep(3)">⟵ Voltar</button>
+            <button class="btn-next" onclick="nextStep(5)">Abrir o coração ❤️</button>
+        </div>
+    </div>
+
+    <div class="screen" id="step-5">
+        <div class="letter-card" id="card-3d">
+            <h1 class="cursive" style="margin-bottom: 25px;">Minha Princesa,</h1>
+            <p>Eu não sou o melhor com as palavras o tempo todo, mas queria fazer algo diferente para eternizar o que sinto. </p>
+            <p>Você me faz querer ser um homem melhor todos os dias. Eu amo cada detalhe seu: o seu cheiro, a sua voz, a sua teimosia e a imensidão do seu coração.</p>
+            <p>Obrigado por ter me escolhido. Eu prometo te amar, te proteger e te fazer a mulher mais feliz desse mundo, hoje e sempre.</p>
+            <span class="signature">Com todo o meu amor,<br>Seu Namorado</span>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn-back" onclick="nextStep(4)">⟵ Ver fotos novamente</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. GERAR FUNDO ESTRELADO RESPONSIVO
+        function createStars() {
+            const container = document.getElementById('stars-container');
+            // Menos estrelas no celular para não pesar
+            const starCount = window.innerWidth < 768 ? 70 : 150; 
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + 'vw';
+                star.style.top = Math.random() * 100 + 'vh';
+                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                star.style.animationDelay = Math.random() * 2 + 's';
+                container.appendChild(star);
+            }
+        }
+        createStars();
+
+        // Variável de controle para não duplicar os vaga-lumes caso ela volte e vá pra frente de novo
+        let magicStarted = false;
+
+        // 2. NAVEGAÇÃO ENTRE AS TELAS (AVANÇAR E VOLTAR)
+        function nextStep(stepNumber) {
+            // Oculta todas as telas
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            // Mostra a tela selecionada
+            const nextScreen = document.getElementById('step-' + stepNumber);
+            nextScreen.classList.add('active');
+
+            // Se for a última tela e a magia ainda não começou, inicia a magia e o 3D
+            if(stepNumber === 5 && !magicStarted) {
+                startMagic();
+                init3DEffect();
+                magicStarted = true;
+            }
+        }
+
+        // 3. EFEITO DE VAGA-LUMES
+        function startMagic() {
+            setInterval(() => {
+                const firefly = document.createElement('div');
+                firefly.classList.add('firefly');
+                firefly.style.left = Math.random() * 100 + 'vw';
+                firefly.style.top = Math.random() * 100 + 'vh';
+                
+                const size = Math.random() * 3 + 2;
+                firefly.style.width = size + 'px';
+                firefly.style.height = size + 'px';
+                firefly.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                
+                document.body.appendChild(firefly);
+
+                setTimeout(() => {
+                    firefly.remove();
+                }, 8000);
+            }, 200);
+        }
+
+        // 4. EFEITO 3D NA CARTA FINAL (Desativado em telas de toque para não tremer)
+        function init3DEffect() {
+            const card = document.getElementById('card-3d');
+            
+            // Verifica se é mobile (Touch screen)
+            const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+            if(!isTouchDevice) {
+                document.addEventListener('mousemove', (e) => {
+                    if(!document.getElementById('step-5').classList.contains('active')) return;
+
+                    const xAxis = (window.innerWidth / 2 - e.pageX) / 30;
+                    const yAxis = (window.innerHeight / 2 - e.pageY) / 30;
+                    card.style.transform = `perspective(1000px) rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+                });
+
+                document.addEventListener('mouseleave', () => {
+                    card.style.transform = `perspective(1000px) rotateY(0deg) rotateX(0deg)`;
+                });
+            }
+        }
+    </script>
+</body>
+</html>
